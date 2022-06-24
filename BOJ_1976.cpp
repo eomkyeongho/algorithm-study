@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 #define endl '\n'
 
@@ -8,8 +9,8 @@ struct UnionFind {
 	vector<int> rank;
 	
 	UnionFind(int n) {
-		parent.resize(n+1,-1);
-		rank.resize(n+1,0);
+		parent.resize(n,-1);
+		rank.resize(n,0);
 	}
 	
 	int getRoot(int n) {
@@ -33,21 +34,35 @@ struct UnionFind {
 
 int main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	int N, M;
 	
-	int n, m;
+	cin >> N >> M;
 	
-	cin >> n >> m;
+	UnionFind uf(N+1);
 	
-	UnionFind uf(n);
-	
-	for(int i=0; i<m; i++) {
-		int op, a, b;
-		cin >> op >> a >> b;
-		if(op == 0) {
-			uf.merge(a,b);
-		} else {
-			if(uf.getRoot(a) == uf.getRoot(b)) cout << "YES" << endl;
-			else cout << "NO" << endl;
+	for(int i=1; i<=N; i++) {
+		for(int j=1; j<=N; j++) {
+			int con;
+			cin >> con;
+			if(con == 1) uf.merge(i,j);
 		}
 	}
+	
+	vector<int> route(M);
+	
+	for(int i=0; i<M; i++) {
+		cin >> route[i];
+	}
+	
+	for(int i=0; i<M; i++) {
+		if(uf.getRoot(route[0]) != uf.getRoot(route[i])) {
+			cout << "NO" << endl;
+			return 0;
+		}
+	}
+	
+	cout << "YES" << endl;
+	return 0;
+		
+	return 0;
 }
