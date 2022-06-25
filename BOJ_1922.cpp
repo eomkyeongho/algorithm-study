@@ -39,29 +39,30 @@ int main() {
 	
 	UnionFind uf(N+1);
 	
-	for(int i=1; i<=N; i++) {
-		for(int j=1; j<=N; j++) {
-			int con;
-			cin >> con;
-			if(con == 1) uf.merge(i,j);
-		}
-	}
-	
-	vector<int> route(M);
+	vector<pair<int, pair<int, int>>> cost(M);
 	
 	for(int i=0; i<M; i++) {
-		cin >> route[i];
-	}
-	
-	for(int i=0; i<M; i++) {
-		if(uf.getRoot(route[0]) != uf.getRoot(route[i])) {
-			cout << "NO" << endl;
-			return 0;
-		}
-	}
-	
-	cout << "YES" << endl;
-	return 0;
+		int a, b, c;
+		cin >> a >> b >> c;
 		
+		cost[i] = make_pair(c, make_pair(a, b));
+	}
+	
+	sort(cost.begin(), cost.end());
+	
+	int ans = 0;
+	
+	for(auto it : cost) {
+		int a = it.second.first;
+		int b = it.second.second;
+		
+		if(uf.getRoot(a) != uf.getRoot(b)) {
+			uf.merge(a, b);
+			ans = ans + it.first;
+		}
+	}
+	
+	cout << ans << endl;
+	
 	return 0;
 }
