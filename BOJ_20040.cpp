@@ -33,35 +33,29 @@ struct UnionFind {
 
 int main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int N, M;
 	
-	cin >> N >> M;
+	int n, m;
 	
-	UnionFind uf(N+1);
+	cin >> n >> m;
 	
-	for(int i=1; i<=N; i++) {
-		for(int j=1; j<=N; j++) {
-			int con;
-			cin >> con;
-			if(con == 1) uf.merge(i,j);
-		}
+	UnionFind uf(n);
+	
+	int ans = 0;
+	
+	for(int i=0; i<m; i++) {
+	    int a, b;
+	    cin >> a >> b;
+	    
+	    
+	    if(uf.getRoot(a) == uf.getRoot(b)) {
+	        ans = i+1;
+	        break;
+	    }
+	    
+	    uf.merge(a,b);
 	}
 	
-	vector<int> route(M);
-	
-	for(int i=0; i<M; i++) {
-		cin >> route[i];
-	}
-	
-	for(int i=0; i<M; i++) {
-		if(uf.getRoot(route[0]) != uf.getRoot(route[i])) {
-			cout << "NO" << endl;
-			return 0;
-		}
-	}
-	
-	cout << "YES" << endl;
-	return 0;
+	cout << ans << endl;
 		
 	return 0;
 }
